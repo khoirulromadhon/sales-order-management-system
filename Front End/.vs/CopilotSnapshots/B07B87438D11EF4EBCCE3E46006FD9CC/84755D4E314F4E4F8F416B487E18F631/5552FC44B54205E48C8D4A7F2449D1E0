@@ -1,0 +1,377 @@
+﻿let salesOrderId = 0;
+let pageMode = "create";
+
+const API_URL = "/api/sales-order";
+
+$(document).ready(function () {
+
+    initializePage();
+
+    $("#btnAddDetail").click(function () {
+        addDetailRow();
+    });
+
+    $("#btnSave").click(function () {
+        saveSalesOrder();
+    });
+    // bind remove for server-rendered rows
+    $(document).on('click', '.btn-remove-detail', function () {
+        removeDetail(this);
+        reindexDetails();
+    });
+
+
+});
+
+function initializePage() {
+
+    const params = new URLSearchParams(window.location.search);
+
+    salesOrderId = params.get("id");
+    pageMode = params.get("mode") || "create";
+
+    if (pageMode === "create") {
+
+        $("#pageTitle").text("Create Sales Order");
+
+        addDetailRow();
+
+        return;
+    }
+
+    if (!salesOrderId)
+        return;
+
+    loadSalesOrder(salesOrderId);
+}
+
+function loadSalesOrder(id) {
+
+    $.ajax({
+
+        url: `${API_URL}/${id}`,
+
+        type: "GET",
+
+        success: function (response) {
+
+            bindHeader(response);
+
+            bindDetails(response.salesSoLitems);
+
+            if (pageMode === "view") {
+
+                setViewMode();
+            }
+
+            if (pageMode === "edit") {
+
+                $("#pageTitle").text("Edit Sales Order");
+            }
+        },
+
+        error: function (error) {
+
+            console.error(error);
+
+            alert("Failed to load data");
+        }
+    });
+}
+
+function bindHeader(data) {
+
+    $("#salesOrderId").val(data.salesSoId);
+
+    $("#soNumber").val(data.soNumber);
+
+    $("#orderDate").val(
+        formatDateForInput(data.orderDate)
+    );
+
+    $("#customerName").val(
+        data.customerName
+    );
+
+    $("#address").val(
+        data.address
+    );
+}
+
+function bindDetails(details) {
+
+    $("#details-body").empty();
+
+    if (!details || details.length === 0) {
+
+        addDetailRow();
+
+        return;
+    }
+
+    details.forEach(detail => {
+
+        addDetailRow(detail);
+    });
+}
+
+function addDetailRow(detail = null) {
+
+    const row = `
+
+        <tr>
+
+            <td>
+
+                <input
+                    type="hidden"
+                    class="detail-id"
+                    value="${detail?.salesSoLitemId ?? 0}" />
+
+                <input
+                    type="text"
+                    class="form-control product-name"
+                    value="${detail?.productName ?? ""}" />
+
+            </td>
+
+            <td>
+
+                <input
+                    type="number"
+                    class="form-control quantity"
+                    value="${detail?.quantity ?? 0}" />
+
+            </td>
+
+            <td>
+
+                <input
+                    type="number"
+                    class="form-control unit-price"
+                    value="${detail?.unitPrice ?? 0}" />
+
+            </td>
+
+            <td>
+
+                <button
+                    type="button"
+                    class="btn btn-danger btn-sm"
+                    onclick="removeDetail(this)">
+
+                    <i class="bi bi-trash"></i>
+
+                </button>
+
+            </td>
+
+        </tr>
+    `;
+
+    $("#details-body").append(row);
+    reindexDetails();
+}
+
+function removeDetail(button) {
+    $(button)
+        .closest("tr")
+        .remove();
+    reindexDetails();
+}
+
+async function saveSalesOrder() {
+
+    const payload = buildPayload();
+
+    if (!validatePayload(payload))
+        return;
+
+    if (pageMode === "create") {
+
+        createSalesOrder(payload);
+    }
+    else {
+
+        updateSalesOrder(payload);
+    }
+}
+
+function buildPayload() {
+
+    let details = [];
+
+    $("#details-body tr").each(function () {
+
+        details.push({
+
+            salesSoLitemId:
+
+                parseInt(
+                    $(this)
+                        .find(".detail-id")
+                        .val()
+                ),
+
+            productName:
+
+                $(this)
+                    .find(".product-name")
+                    .val(),
+
+            quantity:
+
+                parseInt(
+                    $(this)
+                        .find(".quantity")
+                        .val()
+                ),
+
+            unitPrice:
+
+                parseFloat(
+                    $(this)
+                        .find(".unit-price")
+                        .val()
+                )
+        });
+    });
+
+    return {
+
+        salesSoId:
+            parseInt($("#salesOrderId").val()) || 0,
+
+        soNumber:
+            $("#soNumber").val(),
+
+        orderDate:
+            $("#orderDate").val(),
+
+        customerName:
+            $("#customerName").val(),
+
+        address:
+            $("#address").val(),
+
+        salesSoLitems:
+            details
+    };
+}
+
+function createSalesOrder(payload) {
+
+    $.ajax({
+
+        url: API_URL,
+
+        type: "POST",
+
+        contentType: "application/json",
+
+        data: JSON.stringify(payload),
+
+        success: function () {
+
+            alert("Sales Order created");
+
+            window.location.href = "/";
+        },
+
+        error: function (xhr) {
+
+            console.error(xhr);
+
+            alert("Failed create Sales Order");
+        }
+    });
+}
+
+function updateSalesOrder(payload) {
+
+    $.ajax({
+
+        url: `${API_URL}/${payload.salesSoId}`,
+
+        type: "PUT",
+
+        contentType: "application/json",
+
+        data: JSON.stringify(payload),
+
+        success: function () {
+
+            alert("Sales Order updated");
+
+            window.location.href = "/";
+        },
+
+        error: function (xhr) {
+
+            console.error(xhr);
+
+            alert("Failed update Sales Order");
+        }
+    });
+}
+
+function setViewMode() {
+
+    $("#pageTitle").text(
+        "View Sales Order"
+    );
+
+    $("#btnSave").hide();
+
+    $("#btnAddDetail").hide();
+
+    $("input").prop(
+        "disabled",
+        true
+    );
+
+    $("textarea").prop(
+        "disabled",
+        true
+    );
+
+    $("select").prop(
+        "disabled",
+        true
+    );
+
+    $(".btn-danger").hide();
+}
+
+function validatePayload(payload) {
+
+    if (!payload.soNumber) {
+
+        alert("SO Number is required");
+
+        return false;
+    }
+
+    if (!payload.orderDate) {
+
+        alert("Order Date is required");
+
+        return false;
+    }
+
+    if (!payload.customerName) {
+
+        alert("Customer Name is required");
+
+        return false;
+    }
+
+    if (payload.salesSoLitems.length === 0) {
+
+        alert("Detail item is required");
+
+        return false;
+    }
+
+    return true;
+}

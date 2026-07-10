@@ -1,0 +1,233 @@
+﻿const API_URL = "/api/sales-order";
+
+$(document).ready(function () {
+
+    // init default paging/search state
+    window.currentPage = 0;
+    window.pageSize = 5;
+    window.currentKeyword = '';
+    window.currentOrderDate = '';
+    window.totalPage = 1;
+    window.searchTimeout = null;
+
+    GetAllSalesOrders();
+
+    $("#btnAddNew").click(function () {
+        window.location.href = "/Create?mode=create";
+    });
+
+    $("#btnExport").click(function () {
+        exportSalesOrderPdf();
+    });
+
+    $("#btnSearch").click(function () {
+
+        currentKeyword = $("#soKeyword").val();
+        currentOrderDate = $("#soOrderDate").val();
+
+        currentPage = 0;
+
+        GetAllSalesOrders();
+    });
+
+    $("#soKeyword").on("keyup", function () {
+
+        clearTimeout(searchTimeout);
+
+        searchTimeout = setTimeout(() => {
+
+            currentKeyword = $("#soKeyword").val();
+
+            currentPage = 0;
+
+            GetAllSalesOrders();
+
+        }, 500);
+    });
+
+    $("#btnPrev").click(function () {
+
+        if (window.currentPage > 0) {
+
+            window.currentPage--;
+
+            GetAllSalesOrders();
+        }
+    });
+
+    $("#btnNext").click(function () {
+
+        if (window.currentPage < window.totalPage - 1) {
+
+            window.currentPage++;
+
+            GetAllSalesOrders();
+        }
+    });
+
+    $("#btnDeleteConfirm").click(function () {
+
+        const id = $(this).attr("data-id");
+
+        if (!id)
+            return;
+
+        deleteSalesOrder(id);
+    });
+
+});
+
+function GetAllSalesOrders() {
+
+    $.ajax({
+
+        url: API_URL,
+
+        type: "GET",
+
+        data: {
+            page: window.currentPage,
+            size: window.pageSize,
+            keyword: window.currentKeyword,
+            orderDate: window.currentOrderDate
+        },
+
+        success: function (response) {
+
+            const data = response.data || [];
+
+            window.totalPage = response.totalPage || 0;
+
+            let rows = "";
+
+            if (data.length === 0) {
+
+                rows = `
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            No Data Found
+                        </td>
+                    </tr>
+                `;
+            }
+            else {
+
+                for (let i = 0; i < data.length; i++) {
+
+                    rows += `
+                        <tr>
+
+                            <td>
+                                ${(currentPage * pageSize) + i + 1}
+                            </td>
+
+                            <td>
+                                ${data[i].soNumber}
+                            </td>
+
+                            <td>
+                                ${formatDate(data[i].orderDate)}
+                            </td>
+
+                            <td>
+                                ${data[i].customerName}
+                            </td>
+
+                            <td>
+                                ${data[i].address}
+                            </td>
+
+                            <td>
+
+                                <button
+                                    class="btn btn-info btn-sm"
+                                    onclick="viewSalesOrder(${data[i].salesSoId})">
+
+                                    <i class="bi bi-eye"></i>
+
+                                </button>
+
+                                <button
+                                    class="btn btn-warning btn-sm"
+                                    onclick="editSalesOrder(${data[i].salesSoId})">
+
+                                    <i class="bi bi-pencil-square"></i>
+
+                                </button>
+
+                                <button
+                                    class="btn btn-danger btn-sm"
+                                onclick="showDeleteModal(${data[i].salesSoId}, '${data[i].soNumber}')">
+
+                                    <i class="bi bi-trash"></i>
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+                    `;
+                }
+            }
+
+            $("#salesOrderTBody").html(rows);
+
+            updatePaginationInfo();
+        },
+
+        error: function (error) {
+
+            console.error(error);
+
+            alert("Failed to load Sales Orders");
+        }
+    });
+}
+
+function viewSalesOrder(id) {
+    window.location.href =
+        `/Create?id=${id}&mode=view`;
+}
+
+function editSalesOrder(id) {
+    window.location.href =
+        `/Create?id=${id}&mode=edit`;
+}
+
+function showDeleteModal(id, soNumber) {
+
+    $("#deleteModalTitle").html(
+        "Delete Confirmation"
+    );
+
+    $("#deleteModalMessage").html(
+        `Are you sure want to delete <b>${soNumber}</b>?`
+    );
+
+    $("#btnDeleteConfirm")
+        .attr("data-id", id);
+
+    const modal =
+        new bootstrap.Modal(
+            document.getElementById("deleteModal")
+        );
+
+    modal.show();
+}
+
+function updatePaginationInfo() {
+
+    $("#pageInfo").text(
+        `Page ${currentPage + 1} of ${totalPage}`
+    );
+
+    $("#btnPrev").prop(
+        "disabled",
+        currentPage === 0
+    );
+
+    $("#btnNext").prop(
+        "disabled",
+        currentPage >= totalPage - 1
+    );
+}

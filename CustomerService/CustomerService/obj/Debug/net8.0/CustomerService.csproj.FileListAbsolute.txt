@@ -145,3 +145,4 @@ D:\Job\PT Profescipta\sales-order-management-system\CustomerService\CustomerServ
 D:\Job\PT Profescipta\sales-order-management-system\CustomerService\CustomerService\obj\Debug\net8.0\CustomerService.pdb
 D:\Job\PT Profescipta\sales-order-management-system\CustomerService\CustomerService\obj\Debug\net8.0\CustomerService.genruntimeconfig.cache
 D:\Job\PT Profescipta\sales-order-management-system\CustomerService\CustomerService\obj\Debug\net8.0\ref\CustomerService.dll
+D:\Job\PT Profescipta\sales-order-management-system\CustomerService\CustomerService\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt

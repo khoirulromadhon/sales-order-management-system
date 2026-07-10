@@ -1,0 +1,225 @@
+﻿// const API_BASE_URL = "https://localhost:44363";
+// const SALES_API = `${API_BASE_URL}/api/SalesRest`;
+// API endpoint - adjust if your backend base differs
+const SALES_API = "/api/SalesOrder"; // keep relative so it works across environments
+
+$(document).ready(function () {
+
+    // init default paging/search state
+    window.currentPage = 0;
+    window.pageSize = 5;
+    window.currentKeyword = '';
+    window.currentOrderDate = '';
+    window.totalPage = 1;
+    window.searchTimeout = null;
+
+    GetAllSalesOrders();
+
+    $("#btnAddNew").click(function () {
+        window.location.href = "/Create?mode=create";
+    });
+
+    $("#btnExport").click(function () {
+        exportSalesOrderPdf();
+    });
+
+    $("#btnSearch").click(function () {
+
+        currentKeyword = $("#soKeyword").val();
+        currentOrderDate = $("#soOrderDate").val();
+
+        currentPage = 0;
+
+        GetAllSalesOrders();
+    });
+
+    $("#soKeyword").on("keyup", function () {
+
+        clearTimeout(searchTimeout);
+
+        searchTimeout = setTimeout(() => {
+
+            currentKeyword = $("#soKeyword").val();
+
+            currentPage = 0;
+
+            GetAllSalesOrders();
+
+        }, 500);
+    });
+
+    $("#btnPrev").click(function () {
+
+        if (window.currentPage > 0) {
+
+            window.currentPage--;
+
+            GetAllSalesOrders();
+        }
+    });
+
+    $("#btnNext").click(function () {
+
+        if (window.currentPage < window.totalPage - 1) {
+
+            window.currentPage++;
+
+            GetAllSalesOrders();
+        }
+    });
+
+    $("#btnDeleteConfirm").click(function () {
+
+        const id = $(this).attr("data-id");
+
+        if (!id)
+            return;
+
+        deleteSalesOrder(id);
+    });
+
+});
+
+function GetAllSalesOrders() {
+    $.ajax({
+        url: SALES_API,
+        type: "GET",
+        data: {
+            page: window.currentPage,
+            size: window.pageSize,
+            keyword: window.currentKeyword,
+            orderDate: window.currentOrderDate
+        },
+        success: function (response) {
+            try {
+                // normalize response to an array of items
+                let data = [];
+                let totalCount = null;
+
+                if (Array.isArray(response)) {
+                    data = response;
+                } else if (response && Array.isArray(response.data)) {
+                    data = response.data;
+                    // backend may provide total count or totalPage
+                    if (typeof response.totalCount === 'number') totalCount = response.totalCount;
+                    else if (typeof response.totalPage === 'number') totalCount = response.totalPage * window.pageSize;
+                } else if (response && typeof response === 'object') {
+                    // sometimes backend returns object with items under other keys
+                    // try to find the first array property
+                    for (const k in response) {
+                        if (Array.isArray(response[k])) { data = response[k]; break; }
+                    }
+                }
+
+                // compute totalPage if not provided
+                if (totalCount == null) totalCount = data.length;
+                window.totalPage = Math.max(1, Math.ceil(totalCount / window.pageSize));
+
+                let rows = '';
+                if (!data || data.length === 0) {
+                    rows = `<tr><td colspan="6" class="text-center">No Data Found</td></tr>`;
+                } else {
+                    for (let i = 0; i < data.length; i++) {
+                        const item = data[i];
+                        // robust field mapping from backend sample
+                        const id = item.salesSoId ?? item.salesSoID ?? item.id ?? '';
+                        const soNo = (item.soNo ?? item.soNumber ?? item.so ?? '').toString().replace(/'/g, "\\'");
+                        const orderDate = formatDateSafe(item.orderDate);
+                        const customer = item.comCustomerId ?? item.customerName ?? '';
+                        const address = item.address ?? '';
+
+                        rows += `
+                            <tr>
+                                <td>${(window.currentPage * window.pageSize) + i + 1}</td>
+                                <td>${soNo}</td>
+                                <td>${orderDate}</td>
+                                <td>${customer}</td>
+                                <td>${address}</td>
+                                <td>
+                                    <button class="btn btn-info btn-sm" onclick="viewSalesOrder(${id})">View</button>
+                                    <button class="btn btn-warning btn-sm" onclick="editSalesOrder(${id})">Edit</button>
+                                    <button class="btn btn-danger btn-sm" onclick="showDeleteModal(${id}, '${soNo}')">Delete</button>
+                                </td>
+                            </tr>`;
+                    }
+                }
+
+                $("#salesOrderTBody").html(rows);
+                updatePaginationInfo();
+            } catch (err) {
+                console.error('Error rendering sales orders', err, response);
+                $("#salesOrderTBody").html(`<tr><td colspan="6" class="text-center">Failed to render data</td></tr>`);
+            }
+        },
+        error: function (err) {
+            console.error('GetAllSalesOrders error', err);
+            $("#salesOrderTBody").html(`<tr><td colspan="6" class="text-center">Failed to load data</td></tr>`);
+        }
+    });
+}
+
+function formatDateSafe(value) {
+    // accept ISO or /Date(...)/ or Date object
+    if (!value) return '';
+    try {
+        const d = new Date(value);
+        if (isNaN(d)) return value.toString();
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        const dd = String(d.getDate()).padStart(2, '0');
+        return `${yyyy}-${mm}-${dd}`;
+    } catch (e) {
+        return value.toString();
+    }
+}
+
+function viewSalesOrder(id) {
+    window.location.href =
+        `/Create?id=${id}&mode=view`;
+}
+
+function editSalesOrder(id) {
+    window.location.href =
+        `/Create?id=${id}&mode=edit`;
+}
+
+function showDeleteModal(id, soNumber) {
+    // simple confirm (handled in JS) - Indonesian message
+    const confirmed = confirm(`Hapus order ${soNumber} ?, tindakan ini tidak dapat dibatalkan.`);
+    if (confirmed) {
+        deleteSalesOrder(id);
+    }
+}
+
+function deleteSalesOrder(id) {
+    if (!id) return;
+    $.ajax({
+        url: `${API_URL}/${id}`,
+        type: 'DELETE',
+        success: function () {
+            alert('Order deleted');
+            GetAllSalesOrders();
+        },
+        error: function (err) {
+            console.error(err);
+            alert('Failed to delete order');
+        }
+    });
+}
+
+function updatePaginationInfo() {
+
+    $("#pageInfo").text(
+        `Page ${currentPage + 1} of ${totalPage}`
+    );
+
+    $("#btnPrev").prop(
+        "disabled",
+        currentPage === 0
+    );
+
+    $("#btnNext").prop(
+        "disabled",
+        currentPage >= totalPage - 1
+    );
+}

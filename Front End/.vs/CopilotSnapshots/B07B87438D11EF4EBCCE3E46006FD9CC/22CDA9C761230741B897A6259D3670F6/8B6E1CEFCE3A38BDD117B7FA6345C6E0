@@ -1,0 +1,174 @@
+﻿const API_BASE_URL = "https://localhost:44363";
+const SALES_API = `${API_BASE_URL}/api/SalesRest`;
+
+$(document).ready(function () {
+
+    // init default paging/search state
+    window.currentPage = 0;
+    window.pageSize = 5;
+    window.currentKeyword = '';
+    window.currentOrderDate = '';
+    window.totalPage = 1;
+    window.searchTimeout = null;
+
+    GetAllSalesOrders();
+
+    $("#btnAddNew").click(function () {
+        window.location.href = "/Create?mode=create";
+    });
+
+    $("#btnExport").click(function () {
+        exportSalesOrderPdf();
+    });
+
+    $("#btnSearch").click(function () {
+
+        currentKeyword = $("#soKeyword").val();
+        currentOrderDate = $("#soOrderDate").val();
+
+        currentPage = 0;
+
+        GetAllSalesOrders();
+    });
+
+    $("#soKeyword").on("keyup", function () {
+
+        clearTimeout(searchTimeout);
+
+        searchTimeout = setTimeout(() => {
+
+            currentKeyword = $("#soKeyword").val();
+
+            currentPage = 0;
+
+            GetAllSalesOrders();
+
+        }, 500);
+    });
+
+    $("#btnPrev").click(function () {
+
+        if (window.currentPage > 0) {
+
+            window.currentPage--;
+
+            GetAllSalesOrders();
+        }
+    });
+
+    $("#btnNext").click(function () {
+
+        if (window.currentPage < window.totalPage - 1) {
+
+            window.currentPage++;
+
+            GetAllSalesOrders();
+        }
+    });
+
+    $("#btnDeleteConfirm").click(function () {
+
+        const id = $(this).attr("data-id");
+
+        if (!id)
+            return;
+
+        deleteSalesOrder(id);
+    });
+
+});
+
+function GetAllSalesOrders() {
+
+    $.ajax({
+        url: SALES_API,
+        type: "GET",
+        success: function (response) {
+
+            let rows = "";
+
+            response.forEach((item, index) => {
+
+                rows += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item.soNo}</td>
+                        <td>${formatDate(item.orderDate)}</td>
+                        <td>${item.comCustomerId}</td>
+                        <td>${item.address}</td>
+
+                        <td>
+                            <button class="btn btn-info btn-sm"
+                                onclick="viewSalesOrder(${item.salesSoId})">
+                                View
+                            </button>
+
+                            <button class="btn btn-warning btn-sm"
+                                onclick="editSalesOrder(${item.salesSoId})">
+                                Edit
+                            </button>
+
+                            <button class="btn btn-danger btn-sm"
+                                onclick="showDeleteModal(${item.salesSoId}, '${item.soNo}')">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            $("#salesOrderTBody").html(rows);
+        }
+    });
+}
+
+function viewSalesOrder(id) {
+    window.location.href =
+        `/Create?id=${id}&mode=view`;
+}
+
+function editSalesOrder(id) {
+    window.location.href =
+        `/Create?id=${id}&mode=edit`;
+}
+
+function showDeleteModal(id, soNumber) {
+    // simple confirm (handled in JS) - Indonesian message
+    const confirmed = confirm(`Hapus order ${soNumber} ?, tindakan ini tidak dapat dibatalkan.`);
+    if (confirmed) {
+        deleteSalesOrder(id);
+    }
+}
+
+function deleteSalesOrder(id) {
+    if (!id) return;
+    $.ajax({
+        url: `${API_URL}/${id}`,
+        type: 'DELETE',
+        success: function () {
+            alert('Order deleted');
+            GetAllSalesOrders();
+        },
+        error: function (err) {
+            console.error(err);
+            alert('Failed to delete order');
+        }
+    });
+}
+
+function updatePaginationInfo() {
+
+    $("#pageInfo").text(
+        `Page ${currentPage + 1} of ${totalPage}`
+    );
+
+    $("#btnPrev").prop(
+        "disabled",
+        currentPage === 0
+    );
+
+    $("#btnNext").prop(
+        "disabled",
+        currentPage >= totalPage - 1
+    );
+}

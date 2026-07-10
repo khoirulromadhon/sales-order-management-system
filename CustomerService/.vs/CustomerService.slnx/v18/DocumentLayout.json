@@ -59,8 +59,7 @@
               "RelativeToolTip": "CustomerService\\Models\\ComCustomer.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-10T13:58:04.056Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-10T13:58:04.056Z"
             },
             {
               "$type": "Document",
@@ -72,8 +71,7 @@
               "RelativeToolTip": "CustomerService\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-10T12:46:10.281Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-10T12:46:10.281Z"
             },
             {
               "$type": "Document",
@@ -85,8 +83,7 @@
               "RelativeToolTip": "CustomerService\\Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-07-10T12:33:34.284Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-10T12:33:34.284Z"
             },
             {
               "$type": "Document",
@@ -98,8 +95,7 @@
               "RelativeToolTip": "CustomerService\\Service\\GetCustomerService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-10T12:32:42.394Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-07-10T12:32:42.394Z"
             }
           ]
         },
