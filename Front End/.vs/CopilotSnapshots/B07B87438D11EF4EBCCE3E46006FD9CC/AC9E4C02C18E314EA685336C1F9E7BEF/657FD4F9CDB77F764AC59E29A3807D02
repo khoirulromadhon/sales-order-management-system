@@ -1,0 +1,101 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Sales Orders";
+}
+
+<div class="container">
+    <!-- Top row: title left, buttons right -->
+    <div class="row align-items-center mb-3">
+        <div class="col">
+            <h3 class="mb-0 fw-bold">Sales Order</h3>
+        </div>
+        <div class="col-auto">
+            <a class="btn btn-primary me-2" asp-page="/Create">Add New</a>
+            <a class="btn btn-outline-secondary" asp-page="/Export">Export</a>
+        </div>
+    </div>
+
+    <!-- Search row: keyword, order date, search button -->
+    <form method="get" class="row g-2 mb-3">
+        <div class="col-md-6">
+            <input type="text" name="keyword" class="form-control" placeholder="Search keyword..." value="@(Request.Query["keyword"])" />
+        </div>
+        <div class="col-md-3">
+            <input type="date" name="orderDate" class="form-control" value="@(Request.Query["orderDate"])" />
+        </div>
+        <div class="col-md-3">
+            <input type="hidden" name="pageSize" value="5" />
+            <button type="submit" class="btn btn-primary w-100">Search</button>
+        </div>
+    </form>
+
+    <!-- Table row -->
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th style="width:40px">#</th>
+                        <th>SO Number</th>
+                        <th>Order Date</th>
+                        <th>Customer</th>
+                        <th>Address</th>
+                        <th style="width:120px">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model?.Items != null && Model.Items.Any())
+                    {
+                        var index = (Model.PageIndex - 1) * 5;
+                        foreach (var item in Model.Items)
+                        {
+                            index++;
+                            <tr>
+                                <td>@index</td>
+                                <td>@item.SoNumber</td>
+                                <td>@item.OrderDate.ToString("yyyy-MM-dd")</td>
+                                <td>@item.CustomerName</td>
+                                <td>@item.Address</td>
+                                <td>
+                                    <a class="btn btn-sm btn-outline-primary me-1" asp-page="/Create" asp-route-id="@item.Id" asp-route-view="true">View</a>
+                                    <a class="btn btn-sm btn-outline-secondary" asp-page="/Create" asp-route-id="@item.Id">Edit</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center">No data</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Pagination: strict 5 items per page (pageSize passed in query) -->
+    <nav>
+        <ul class="pagination justify-content-center">
+            @if (Model?.TotalPages > 1)
+            {
+                var current = Model.PageIndex;
+                var total = Model.TotalPages;
+                <li class="page-item @(current == 1 ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Page("", null, new { page = current - 1, keyword = Request.Query["keyword"], orderDate = Request.Query["orderDate"], pageSize = 5 }, null)">Previous</a>
+                </li>
+                for (int p = 1; p <= total; p++)
+                {
+                    <li class="page-item @(p == current ? "active" : "")">
+                        <a class="page-link" href="@Url.Page("", null, new { page = p, keyword = Request.Query["keyword"], orderDate = Request.Query["orderDate"], pageSize = 5 }, null)">@p</a>
+                    </li>
+                }
+                <li class="page-item @(current == total ? "disabled" : "")">
+                    <a class="page-link" href="@Url.Page("", null, new { page = current + 1, keyword = Request.Query["keyword"], orderDate = Request.Query["orderDate"], pageSize = 5 }, null)">Next</a>
+                </li>
+            }
+        </ul>
+    </nav>
+
+</div>

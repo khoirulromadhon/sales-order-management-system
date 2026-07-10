@@ -1,0 +1,53 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Front_End.Pages.Models;
+using System;
+using System.Collections.Generic;
+
+namespace Front_End.Pages
+{
+    public class CreateModel : PageModel
+    {
+        [BindProperty]
+        public SalesOrder SalesOrder { get; set; } = new();
+
+        [BindProperty(SupportsGet = true)]
+        public int? id { get; set; }
+
+        public bool IsEdit => id.HasValue && id.Value > 0;
+
+        public void OnGet()
+        {
+            if (IsEdit)
+            {
+                // load static example for edit
+                SalesOrder = new SalesOrder
+                {
+                    Id = id.Value,
+                    SoNumber = "SO-EDIT-" + id.Value,
+                    OrderDate = DateTime.Today,
+                    CustomerName = "Edited Customer",
+                    Address = "Edited Address",
+                    Details = new List<SalesOrderDetail>
+                    {
+                        new SalesOrderDetail{ Id=1, ProductName="Item A", Quantity=1, UnitPrice=100 },
+                        new SalesOrderDetail{ Id=2, ProductName="Item B", Quantity=2, UnitPrice=50 }
+                    }
+                };
+            }
+            else
+            {
+                // default create with one blank detail
+                SalesOrder.Details.Add(new SalesOrderDetail());
+                SalesOrder.OrderDate = DateTime.Today;
+            }
+        }
+
+        public IActionResult OnPost()
+        {
+            // here we would save to database; for now redirect back to index
+            // You can inspect SalesOrder to see posted values
+            return RedirectToPage("/Index");
+        }
+    }
+}
