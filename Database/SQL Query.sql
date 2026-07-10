@@ -26,3 +26,7 @@ INSERT INTO COM_CUSTOMER VALUES ('CV Sejahtera Abadi');
 INSERT INTO COM_CUSTOMER VALUES ('PT Karya Utama');
 
 select * from COM_CUSTOMER;
+
+select * from SALES_SO;
+
+select * from SALES_SO_LITEM;

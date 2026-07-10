@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace CustomerService.Controllers
 {
     [ApiController]
-    [Route("api/customer")]
+    [Route("api/[controller]")]
     public class CustomerRestController : ControllerBase
     {
         private readonly GetCustomerService _customerService;

@@ -1,0 +1,81 @@
+[
+  {
+    "ContainingType": "SalesOrderService.Controllers.SalesRestController",
+    "Method": "Create",
+    "RelativePath": "api/SalesRest",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "order",
+        "Type": "SalesOrderService.ViewModel.SalesSoVm",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SalesOrderService.Controllers.SalesRestController",
+    "Method": "GetAll",
+    "RelativePath": "api/SalesRest",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SalesOrderService.Controllers.SalesRestController",
+    "Method": "GetById",
+    "RelativePath": "api/SalesRest/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SalesOrderService.Controllers.SalesRestController",
+    "Method": "Update",
+    "RelativePath": "api/SalesRest/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "order",
+        "Type": "SalesOrderService.ViewModel.SalesSoVm",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SalesOrderService.Controllers.SalesRestController",
+    "Method": "Delete",
+    "RelativePath": "api/SalesRest/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

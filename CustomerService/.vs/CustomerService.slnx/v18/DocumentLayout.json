@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "D:\\Job\\PT Profescipta\\sales-order-management-system\\CustomerService\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C8E1EF95-431B-25F3-1DD5-ECA73FFFCCD1}|CustomerService\\CustomerService.csproj|d:\\job\\pt profescipta\\sales-order-management-system\\customerservice\\customerservice\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{C8E1EF95-431B-25F3-1DD5-ECA73FFFCCD1}|CustomerService\\CustomerService.csproj|solutionrelative:customerservice\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{C8E1EF95-431B-25F3-1DD5-ECA73FFFCCD1}|CustomerService\\CustomerService.csproj|d:\\job\\pt profescipta\\sales-order-management-system\\customerservice\\customerservice\\controllers\\customerrestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C8E1EF95-431B-25F3-1DD5-ECA73FFFCCD1}|CustomerService\\CustomerService.csproj|solutionrelative:customerservice\\controllers\\customerrestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C8E1EF95-431B-25F3-1DD5-ECA73FFFCCD1}|CustomerService\\CustomerService.csproj|d:\\job\\pt profescipta\\sales-order-management-system\\customerservice\\customerservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C8E1EF95-431B-25F3-1DD5-ECA73FFFCCD1}|CustomerService\\CustomerService.csproj|solutionrelative:customerservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C8E1EF95-431B-25F3-1DD5-ECA73FFFCCD1}|CustomerService\\CustomerService.csproj|d:\\job\\pt profescipta\\sales-order-management-system\\customerservice\\customerservice\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{C8E1EF95-431B-25F3-1DD5-ECA73FFFCCD1}|CustomerService\\CustomerService.csproj|solutionrelative:customerservice\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C8E1EF95-431B-25F3-1DD5-ECA73FFFCCD1}|CustomerService\\CustomerService.csproj|d:\\job\\pt profescipta\\sales-order-management-system\\customerservice\\customerservice\\models\\comcustomer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C8E1EF95-431B-25F3-1DD5-ECA73FFFCCD1}|CustomerService\\CustomerService.csproj|solutionrelative:customerservice\\models\\comcustomer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C8E1EF95-431B-25F3-1DD5-ECA73FFFCCD1}|CustomerService\\CustomerService.csproj|d:\\job\\pt profescipta\\sales-order-management-system\\customerservice\\customerservice\\service\\getcustomerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -22,11 +30,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "CustomerRestController.cs",
+              "DocumentMoniker": "D:\\Job\\PT Profescipta\\sales-order-management-system\\CustomerService\\CustomerService\\Controllers\\CustomerRestController.cs",
+              "RelativeDocumentMoniker": "CustomerService\\Controllers\\CustomerRestController.cs",
+              "ToolTip": "D:\\Job\\PT Profescipta\\sales-order-management-system\\CustomerService\\CustomerService\\Controllers\\CustomerRestController.cs",
+              "RelativeToolTip": "CustomerService\\Controllers\\CustomerRestController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-10T14:00:01.261Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ComCustomer.cs",
+              "DocumentMoniker": "D:\\Job\\PT Profescipta\\sales-order-management-system\\CustomerService\\CustomerService\\Models\\ComCustomer.cs",
+              "RelativeDocumentMoniker": "CustomerService\\Models\\ComCustomer.cs",
+              "ToolTip": "D:\\Job\\PT Profescipta\\sales-order-management-system\\CustomerService\\CustomerService\\Models\\ComCustomer.cs",
+              "RelativeToolTip": "CustomerService\\Models\\ComCustomer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-10T13:58:04.056Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -36,13 +70,14 @@
               "RelativeDocumentMoniker": "CustomerService\\Program.cs",
               "ToolTip": "D:\\Job\\PT Profescipta\\sales-order-management-system\\CustomerService\\CustomerService\\Program.cs",
               "RelativeToolTip": "CustomerService\\Program.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAQwB0AAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-10T12:46:10.281Z"
+              "WhenOpened": "2026-07-10T12:46:10.281Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "launchSettings.json",
               "DocumentMoniker": "D:\\Job\\PT Profescipta\\sales-order-management-system\\CustomerService\\CustomerService\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "CustomerService\\Properties\\launchSettings.json",
@@ -55,7 +90,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "GetCustomerService.cs",
               "DocumentMoniker": "D:\\Job\\PT Profescipta\\sales-order-management-system\\CustomerService\\CustomerService\\Service\\GetCustomerService.cs",
               "RelativeDocumentMoniker": "CustomerService\\Service\\GetCustomerService.cs",
@@ -63,7 +98,8 @@
               "RelativeToolTip": "CustomerService\\Service\\GetCustomerService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-10T12:32:42.394Z"
+              "WhenOpened": "2026-07-10T12:32:42.394Z",
+              "EditorCaption": ""
             }
           ]
         },
