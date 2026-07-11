@@ -1,5 +1,5 @@
-// API endpoint - adjust if your backend base differs
-const SALES_API = "https://localhost:44363/api/SalesOrder"; // keep relative so it works across environments
+// Use backend SalesRest API (do not change)
+const SALES_API = "https://localhost:44363/api/SalesRest";
 
 $(document).ready(function () {
 
@@ -79,10 +79,9 @@ $(document).ready(function () {
 });
 
 function GetAllSalesOrders() {
-    debugger;
-    // Simple: fetch all data and render directly (no pagination)
     $.ajax({
         url: SALES_API,
+        contentType: "application/json",
         type: "GET",
         success: function (response) {
             try {
@@ -145,13 +144,13 @@ function formatDateSafe(value) {
 }
 
 function viewSalesOrder(id) {
-    window.location.href =
-        `/Create?id=${id}&mode=view`;
+    // navigate to Create page in view mode (server-side View prop is optional; client JS will also set view)
+    window.location.href = `/Create?id=${id}&view=true`;
 }
 
 function editSalesOrder(id) {
-    window.location.href =
-        `/Create?id=${id}&mode=edit`;
+    // navigate to Create page in edit mode
+    window.location.href = `/Create?id=${id}`;
 }
 
 function showDeleteModal(id, soNumber) {

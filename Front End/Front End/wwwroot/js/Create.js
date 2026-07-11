@@ -1,17 +1,20 @@
 ﻿let salesOrderId = 0;
 let pageMode = "create";
 
-const API_URL = "/api/sales-order";
+// Use backend SalesRest API (do not change)
+const API_URL = "https://localhost:44363/api/SalesRest";
 
 $(document).ready(function () {
 
     initializePage();
 
-    $("#btnAddDetail").click(function () {
+    $("#btnAddDetail").click(function (e) {
+        e.preventDefault();
         addDetailRow();
     });
 
-    $("#btnSave").click(function () {
+    $("#btnSave").click(function (e) {
+        e.preventDefault();
         saveSalesOrder();
     });
     // bind remove for server-rendered rows
@@ -28,19 +31,27 @@ function initializePage() {
     const params = new URLSearchParams(window.location.search);
 
     salesOrderId = params.get("id");
-    pageMode = params.get("mode") || "create";
+
+    // determine mode: view param has priority, then presence of id => edit, otherwise create
+    if (params.has('view') && (params.get('view') === 'true' || params.get('view') === '1')) {
+        pageMode = 'view';
+    } else if (salesOrderId) {
+        pageMode = 'edit';
+    } else {
+        pageMode = 'create';
+    }
+
+    // reflect mode in hidden input if needed
+    const $pm = $('#pageMode');
+    if ($pm.length) $pm.val(pageMode);
 
     if (pageMode === "create") {
-
         $("#pageTitle").text("Create Sales Order");
-
         addDetailRow();
-
         return;
     }
 
-    if (!salesOrderId)
-        return;
+    if (!salesOrderId) return;
 
     loadSalesOrder(salesOrderId);
 }
@@ -55,9 +66,10 @@ function loadSalesOrder(id) {
 
         success: function (response) {
 
+            // map backend fields to UI
             bindHeader(response);
 
-            bindDetails(response.salesSoLitems);
+            bindDetails(response.salesSoLitems || response.salesSoLItems || response.items || []);
 
             if (pageMode === "view") {
 
@@ -80,22 +92,13 @@ function loadSalesOrder(id) {
 }
 
 function bindHeader(data) {
-
-    $("#salesOrderId").val(data.salesSoId);
-
-    $("#soNumber").val(data.soNumber);
-
-    $("#orderDate").val(
-        formatDateForInput(data.orderDate)
-    );
-
-    $("#customerName").val(
-        data.customerName
-    );
-
-    $("#address").val(
-        data.address
-    );
+    // BE sample: salesSoId, soNo, orderDate, comCustomerId, address
+    $("#salesOrderId").val(data.salesSoId || data.id || '');
+    $("#soNumber").val(data.soNo ?? data.soNumber ?? '');
+    $("#orderDate").val(formatDateSafe(data.orderDate));
+    // show customer id or name as provided by BE
+    $("#customerName").val(data.comCustomerId ?? data.customerName ?? '');
+    $("#address").val(data.address ?? '');
 }
 
 function bindDetails(details) {
@@ -103,14 +106,11 @@ function bindDetails(details) {
     $("#details-body").empty();
 
     if (!details || details.length === 0) {
-
         addDetailRow();
-
         return;
     }
 
     details.forEach(detail => {
-
         addDetailRow(detail);
     });
 }
@@ -123,46 +123,27 @@ function addDetailRow(detail = null) {
 
             <td>
 
-                <input
-                    type="hidden"
-                    class="detail-id"
-                    value="${detail?.salesSoLitemId ?? 0}" />
+                <input type="hidden" class="detail-id" value="${detail?.salesSoLitemId ?? 0}" />
 
-                <input
-                    type="text"
-                    class="form-control product-name"
-                    value="${detail?.productName ?? ""}" />
+                <input type="text" class="form-control product-name" value="${detail?.itemName ?? detail?.productName ?? ''}" />
 
             </td>
 
             <td>
 
-                <input
-                    type="number"
-                    class="form-control quantity"
-                    value="${detail?.quantity ?? 0}" />
+                <input type="number" class="form-control quantity" value="${detail?.quantity ?? 0}" />
 
             </td>
 
             <td>
 
-                <input
-                    type="number"
-                    class="form-control unit-price"
-                    value="${detail?.unitPrice ?? 0}" />
+                <input type="number" class="form-control unit-price" value="${detail?.price ?? detail?.unitPrice ?? 0}" step="0.01" />
 
             </td>
 
             <td>
 
-                <button
-                    type="button"
-                    class="btn btn-danger btn-sm"
-                    onclick="removeDetail(this)">
-
-                    <i class="bi bi-trash"></i>
-
-                </button>
+                <button type="button" class="btn btn-danger btn-sm btn-remove-detail">Delete</button>
 
             </td>
 
@@ -219,58 +200,23 @@ function buildPayload() {
     $("#details-body tr").each(function () {
 
         details.push({
-
-            salesSoLitemId:
-
-                parseInt(
-                    $(this)
-                        .find(".detail-id")
-                        .val()
-                ),
-
-            productName:
-
-                $(this)
-                    .find(".product-name")
-                    .val(),
-
-            quantity:
-
-                parseInt(
-                    $(this)
-                        .find(".quantity")
-                        .val()
-                ),
-
-            unitPrice:
-
-                parseFloat(
-                    $(this)
-                        .find(".unit-price")
-                        .val()
-                )
+            salesSoLitemId: parseInt($(this).find('.detail-id').val()) || 0,
+            salesSoId: parseInt($('#salesOrderId').val()) || 0,
+            itemName: $(this).find('.product-name').val(),
+            quantity: parseInt($(this).find('.quantity').val()) || 0,
+            price: parseFloat($(this).find('.unit-price').val()) || 0
         });
     });
 
     return {
 
-        salesSoId:
-            parseInt($("#salesOrderId").val()) || 0,
-
-        soNumber:
-            $("#soNumber").val(),
-
-        orderDate:
-            $("#orderDate").val(),
-
-        customerName:
-            $("#customerName").val(),
-
-        address:
-            $("#address").val(),
-
-        salesSoLitems:
-            details
+        salesSoId: parseInt($("#salesOrderId").val()) || 0,
+        soNo: $("#soNumber").val(),
+        orderDate: $("#orderDate").val(),
+        comCustomerId: (function () { const v = $("#customerName").val(); return isNaN(parseInt(v)) ? null : parseInt(v); })(),
+        customerName: $("#customerName").val(),
+        address: $("#address").val(),
+        salesSoLitems: details
     };
 }
 
@@ -359,32 +305,26 @@ function setViewMode() {
 }
 
 function validatePayload(payload) {
-
-    if (!payload.soNumber) {
-
-        alert("SO Number is required");
-
+    // BE uses soNo as SO number field; accept soNo or soNumber
+    const so = payload.soNo ?? payload.soNumber ?? '';
+    if (!so || so.toString().trim() === '') {
+        alert('SO Number is required');
         return false;
     }
 
-    if (!payload.orderDate) {
-
-        alert("Order Date is required");
-
+    if (!payload.orderDate || payload.orderDate.toString().trim() === '') {
+        alert('Order Date is required');
         return false;
     }
 
-    if (!payload.customerName) {
-
-        alert("Customer Name is required");
-
+    // accept either customerName or comCustomerId
+    if ((!payload.customerName || payload.customerName.toString().trim() === '') && !payload.comCustomerId) {
+        alert('Customer is required');
         return false;
     }
 
-    if (payload.salesSoLitems.length === 0) {
-
-        alert("Detail item is required");
-
+    if (!payload.salesSoLitems || payload.salesSoLitems.length === 0) {
+        alert('At least one detail item is required');
         return false;
     }
 

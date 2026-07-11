@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{86771551-6A5A-8A65-7305-B8156663E33A}|SalesOrderService\\SalesOrderService.csproj|d:\\job\\pt profescipta\\sales-order-management-system\\salesorderservice\\salesorderservice\\service\\salesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86771551-6A5A-8A65-7305-B8156663E33A}|SalesOrderService\\SalesOrderService.csproj|solutionrelative:salesorderservice\\service\\salesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{86771551-6A5A-8A65-7305-B8156663E33A}|SalesOrderService\\SalesOrderService.csproj|d:\\job\\pt profescipta\\sales-order-management-system\\salesorderservice\\salesorderservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86771551-6A5A-8A65-7305-B8156663E33A}|SalesOrderService\\SalesOrderService.csproj|solutionrelative:salesorderservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{86771551-6A5A-8A65-7305-B8156663E33A}|SalesOrderService\\SalesOrderService.csproj|d:\\job\\pt profescipta\\sales-order-management-system\\salesorderservice\\salesorderservice\\controllers\\salesrestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{86771551-6A5A-8A65-7305-B8156663E33A}|SalesOrderService\\SalesOrderService.csproj|solutionrelative:salesorderservice\\controllers\\salesrestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86771551-6A5A-8A65-7305-B8156663E33A}|SalesOrderService\\SalesOrderService.csproj|d:\\job\\pt profescipta\\sales-order-management-system\\salesorderservice\\salesorderservice\\service\\salesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86771551-6A5A-8A65-7305-B8156663E33A}|SalesOrderService\\SalesOrderService.csproj|solutionrelative:salesorderservice\\service\\salesservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{86771551-6A5A-8A65-7305-B8156663E33A}|SalesOrderService\\SalesOrderService.csproj|d:\\job\\pt profescipta\\sales-order-management-system\\salesorderservice\\salesorderservice\\viewmodel\\salessovm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -29,10 +33,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{86771551-6A5A-8A65-7305-B8156663E33A}|SalesOrderService\\SalesOrderService.csproj|d:\\job\\pt profescipta\\sales-order-management-system\\salesorderservice\\salesorderservice\\models\\salesdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{86771551-6A5A-8A65-7305-B8156663E33A}|SalesOrderService\\SalesOrderService.csproj|solutionrelative:salesorderservice\\models\\salesdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86771551-6A5A-8A65-7305-B8156663E33A}|SalesOrderService\\SalesOrderService.csproj|d:\\job\\pt profescipta\\sales-order-management-system\\salesorderservice\\salesorderservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86771551-6A5A-8A65-7305-B8156663E33A}|SalesOrderService\\SalesOrderService.csproj|solutionrelative:salesorderservice\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -42,11 +42,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "SalesService.cs",
               "DocumentMoniker": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\SalesOrderService\\Service\\SalesService.cs",
               "RelativeDocumentMoniker": "SalesOrderService\\Service\\SalesService.cs",
@@ -66,10 +66,11 @@
               "RelativeDocumentMoniker": "SalesOrderService\\Controllers\\SalesRestController.cs",
               "ToolTip": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\SalesOrderService\\Controllers\\SalesRestController.cs",
               "RelativeToolTip": "SalesOrderService\\Controllers\\SalesRestController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADYAAAArAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEEAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-10T13:59:48.955Z",
-              "IsPinned": true
+              "IsPinned": true,
+              "EditorCaption": ""
             },
             {
               "$type": "Bookmark",
@@ -77,31 +78,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "SalesSoVm.cs",
-              "DocumentMoniker": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\SalesOrderService\\ViewModel\\SalesSoVm.cs",
-              "RelativeDocumentMoniker": "SalesOrderService\\ViewModel\\SalesSoVm.cs",
-              "ToolTip": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\SalesOrderService\\ViewModel\\SalesSoVm.cs",
-              "RelativeToolTip": "SalesOrderService\\ViewModel\\SalesSoVm.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBAAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-10T15:16:44.705Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "SalesSoLitemVm.cs",
-              "DocumentMoniker": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\SalesOrderService\\ViewModel\\SalesSoLitemVm.cs",
-              "RelativeDocumentMoniker": "SalesOrderService\\ViewModel\\SalesSoLitemVm.cs",
-              "ToolTip": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\SalesOrderService\\ViewModel\\SalesSoLitemVm.cs",
-              "RelativeToolTip": "SalesOrderService\\ViewModel\\SalesSoLitemVm.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAQAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-10T15:16:35.042Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "SalesSoLitem.cs",
               "DocumentMoniker": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\SalesOrderService\\Models\\SalesSoLitem.cs",
               "RelativeDocumentMoniker": "SalesOrderService\\Models\\SalesSoLitem.cs",
@@ -113,7 +90,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "SalesSo.cs",
               "DocumentMoniker": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\SalesOrderService\\Models\\SalesSo.cs",
               "RelativeDocumentMoniker": "SalesOrderService\\Models\\SalesSo.cs",
@@ -125,7 +102,44 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\SalesOrderService\\Program.cs",
+              "RelativeDocumentMoniker": "SalesOrderService\\Program.cs",
+              "ToolTip": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\SalesOrderService\\Program.cs",
+              "RelativeToolTip": "SalesOrderService\\Program.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAUwCQAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-10T13:49:17.07Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SalesSoLitemVm.cs",
+              "DocumentMoniker": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\SalesOrderService\\ViewModel\\SalesSoLitemVm.cs",
+              "RelativeDocumentMoniker": "SalesOrderService\\ViewModel\\SalesSoLitemVm.cs",
+              "ToolTip": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\SalesOrderService\\ViewModel\\SalesSoLitemVm.cs",
+              "RelativeToolTip": "SalesOrderService\\ViewModel\\SalesSoLitemVm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAQAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-10T15:16:35.042Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "SalesSoVm.cs",
+              "DocumentMoniker": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\SalesOrderService\\ViewModel\\SalesSoVm.cs",
+              "RelativeDocumentMoniker": "SalesOrderService\\ViewModel\\SalesSoVm.cs",
+              "ToolTip": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\SalesOrderService\\ViewModel\\SalesSoVm.cs",
+              "RelativeToolTip": "SalesOrderService\\ViewModel\\SalesSoVm.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwBAAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-10T15:16:44.705Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "SalesDbContext.cs",
               "DocumentMoniker": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\SalesOrderService\\Models\\SalesDbContext.cs",
               "RelativeDocumentMoniker": "SalesOrderService\\Models\\SalesDbContext.cs",
@@ -134,18 +148,6 @@
               "ViewState": "AgIAACkAAAAAAAAAAAAswAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-07-10T14:44:21.609Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\SalesOrderService\\Program.cs",
-              "RelativeDocumentMoniker": "SalesOrderService\\Program.cs",
-              "ToolTip": "D:\\Job\\PT Profescipta\\sales-order-management-system\\SalesOrderService\\SalesOrderService\\Program.cs",
-              "RelativeToolTip": "SalesOrderService\\Program.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA4AAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-07-10T13:49:17.07Z"
             }
           ]
         },
